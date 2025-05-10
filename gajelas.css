@@ -1,0 +1,118 @@
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  background: linear-gradient(to bottom, #d1c4e9, #c8e6c9); /* ungu ke hijau pastel */
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: sans-serif;
+}
+
+.card {
+  background: white;
+  padding: 15px;
+  margin-top: 10px;
+  border-radius: 10px;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+  position: relative;
+  animation: fadeInCard 0.5s ease;
+}
+
+
+#bebekku {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 80px;
+  height: auto;
+  z-index: 999;
+}
+
+@keyframes fadeInCard {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+textarea, input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  transition: 0.3s ease;
+}
+
+input[type="submit"] {
+  background: linear-gradient(to right, #3498db, #ffffff);
+  color: #000;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.4s ease;
+}
+
+input[type="submit"]:hover {
+  background: linear-gradient(to right, #00ff99, #cc66ff);
+  color: white;
+}
+
+#dashboardSection {
+  display: none;
+  animation: slideFade 1s ease;
+}
+
+@keyframes slideFade {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.custom-alert {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 15px 25px;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  z-index: 999;
+  animation: fadeInOut 2s ease-in-out;
+}
+.custom-alert.success {
+  background: linear-gradient(to right, #6be085, #a7f0d6);
+}
+.custom-alert.error {
+  background: linear-gradient(to right, #f95959, #ff9a9e);
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translate(-50%, -20px); }
+  20% { opacity: 1; transform: translate(-50%, 0); }
+  80% { opacity: 1; transform: translate(-50%, 0); }
+  100% { opacity: 0; transform: translate(-50%, -20px); }
+}
+
+.delete-btn {
+  background: linear-gradient(to right, #ff4e50, #f9d423);
+  border: none;
+  padding: 6px 12px;
+  color: white;
+  font-size: 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  float: right;
+  margin-top: 10px;
+  transition: background 0.3s ease;
+}
+
+.delete-btn:hover {
+  background: linear-gradient(to right, #c0392b, #f1c40f);
+}
+

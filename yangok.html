@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAH5vWT-YGFVWwp4PS2mA7EwMAqkEoPnQc",
+      authDomain: "ywskiny.firebaseapp.com",
+      projectId: "ywskiny",
+      storageBucket: "ywskiny.firebasestorage.app",
+      messagingSenderId: "68204194017",
+      appId: "1:68204194017:web:885b87b1cd15f015a82fa0"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+  </script>
+
+  <title>satu vs tiga</title>
+  <a href="yudi.txt">biodata saya nih konto o_<</a>
+
+  <style>
+    body {
+      background: linear-gradient(to bottom, #d1c4e9, #c8e6c9); /* ungu ke hijau pastel */
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      background-size: cover;
+      font-family: sans-serif;
+    }
+
+    h2, h3, p {
+      color: #2f2f2f;
+    }
+
+    .card {
+      background: white;
+      padding: 15px;
+      margin-top: 10px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      position: relative;
+    }
+
+    .delete-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: crimson;
+      color: white;
+      border: none;
+      padding: 4px 8px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    textarea, input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    input[type="submit"] {
+      background: linear-gradient(to right, #2193b0, #6dd5ed);
+      color: white;
+      border: none;
+      padding: 10px;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    input[type="submit"]:hover {
+      background: linear-gradient(to right, #6dd5ed, #ffffff);
+      color: #000;
+    }
+
+    #dashboardSection {
+      display: none;
+      margin-top: 30px;
+    }
+
+    button {
+      background: linear-gradient(to right, #8e2de2, #4a00e0);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.4s ease, transform 0.2s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    button:hover {
+      background: linear-gradient(to right, #4a00e0, #8e2de2);
+      transform: scale(1.05);
+    }
+
+    .fade-in {
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .alert-box {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #333;
+      color: #fff;
+      padding: 15px 25px;
+      border-radius: 8px;
+      font-weight: bold;
+      animation: fadeIn 0.6s ease-out;
+      z-index: 999;
+    }
+
+    .bebek {
+      position: fixed;
+      top: 30%;
+      width: 120px;
+      z-index: -1;
+      animation: bebekSlide 4s ease-in-out infinite;
+    }
+
+    @keyframes bebekSlide {
+      0% { left: -150px; opacity: 0; }
+      50% { left: 50%; opacity: 1; }
+      100% { left: 110%; opacity: 0; }
+    }
+  </style>
+</head>
+<body class="fade-in">
+
+  <img src="barsu.png" class="bebek" />
+
+  <h2>yudi anjiear</h2>
+  <p>woip kento, kirim pesan bjat saya ya</p>
+
+  <h3>kirim pesan ya wok</h3>
+  <form id="form">
+    <label>dari siapa inih</label><br>
+    <input type="text" id="from" required><br>
+
+    <label>pesanyvyavyabgok</label><br>
+    <textarea id="message" required></textarea><br>
+
+    <input type="submit" value="klik kirim ini yha">
+  </form>
+
+  <hr>
+
+  <h3>login owner yangok buat bisa loat pesan kalian</h3>
+  <input type="password" id="password" placeholder="topsikret">
+  <button onclick="login()">sahenonli</button>
+
+  <div id="dashboardSection">
+    <h3>Dashboard Pesan (Owner)</h3>
+    <div id="dashboard"></div>
+  </div>
+
+  <script>
+    const form = document.getElementById("form");
+    const dashboard = document.getElementById("dashboard");
+    const dashboardSection = document.getElementById("dashboardSection");
+
+    let messages = [];
+
+    function showAlert(text) {
+      const alertBox = document.createElement("div");
+      alertBox.className = "alert-box";
+      alertBox.innerText = text;
+      document.body.appendChild(alertBox);
+      setTimeout(() => {
+        alertBox.remove();
+      }, 2000);
+    }
+
+    form.addEventListener("submit", async function(e) {
+      e.preventDefault();
+      const name = document.getElementById("from").value;
+      const msg = document.getElementById("message").value;
+
+      try {
+        await db.collection("messages").add({
+          name: name,
+          msg: msg,
+          timestamp: new Date()
+        });
+        e.target.reset();
+        showAlert("Pesan berhasil terkirim!");
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    });
+
+    function login() {
+      const pw = document.getElementById("password").value;
+      if (pw === "yesking") {
+        showAlert("welcome yangok!");
+        showDashboard();
+      } else {
+        showAlert("yhahaha yangok");
+      }
+    }
+
+    // Real-time listener for message updates
+    db.collection("messages").orderBy("timestamp", "desc").onSnapshot((snapshot) => {
+      dashboard.innerHTML = ""; // Clear existing messages
+      snapshot.forEach((doc) => {
+        const message = doc.data();
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `<strong>${message.name}:</strong><br>${message.msg}
+          <button class="delete-btn" onclick="deleteMessage('${doc.id}')">hapus</button>`;
+        dashboard.appendChild(card);
+      });
+    });
+
+    async function deleteMessage(id) {
+      try {
+        await db.collection("messages").doc(id).delete();
+        showAlert("Pesan berhasil dihapus!");
+      } catch (error) {
+        console.error("Error deleting message:", error);
+        showAlert("Terjadi kesalahan saat menghapus pesan!");
+      }
+    }
+
+    function showDashboard() {
+      dashboardSection.style.display = "block";
+    }
+  </script>
+</body>
+</html>
